@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assinatura Digital em Documento - PDF</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>📋 Assinatura Digital Autorização de Passagem</h1>
+            <p class="subtitle">Assine seu documento com foto e gere PDF</p>
+        </header>
+
+        <main>
+            <!-- Seção de Documento -->
+            <section class="form-section">
+                <h2>📄 Documento para Assinatura:</h2>
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="pdf-upload" accept=".pdf" style="display:none;">
+                    <div id="document-loaded" class="document-loaded hidden">
+                        <p>✓ Documento carregado!</p>
+                        <p style="font-size: 12px; color: #999;">Clique aqui para carregar outro documento</p>
+                    </div>
+                    <div id="document-loading">
+                        <p>⏳ Carregando documento...</p>
+                    </div>
+                </div>
+                <div id="file-info" class="file-info hidden">
+                    <p>📄 Arquivo: <strong id="file-name"></strong></p>
+                </div>
+            </section>
+
+            <!-- Visualização do Documento -->
+            <section class="form-section">
+                <h2>👁️ Visualização do Documento:</h2>
+                <div class="pdf-viewer-wrapper">
+                    <div id="pdf-container" class="pdf-container">
+                        <canvas id="pdf-canvas"></canvas>
+                        <canvas id="signature-canvas" class="signature-overlay"></canvas>
+                    </div>
+                </div>
+                
+            </section>
+
+            <!-- Ferramentas de Assinatura -->
+            <section class="form-section">
+                <h2>✍️ Ferramentas de Assinatura:</h2>
+                <div class="signature-tools">
+                    <div class="tool-group">
+                        <label for="line-width">Espessura da Linha:</label>
+                        <input type="range" id="line-width" min="1" max="5" value="2">
+                        <span id="width-value">2</span>
+                    </div>
+                    <div class="tool-group">
+                        <label for="signature-color">Cor da Assinatura:</label>
+                        <input type="color" id="signature-color" value="#000000">
+                    </div>
+                </div>
+                <div class="button-group">
+                    <button id="clear-signature" class="btn btn-secondary">🗑️ Limpar Assinatura</button>
+                    <button id="undo-signature" class="btn btn-secondary">↶ Desfazer</button>
+                </div>
+            </section>
+
+            <!-- Seção de Foto -->
+            <section class="form-section">
+                <h2>📷 Capturar Foto:</h2>
+                <div class="video-container">
+                    <video id="video" class="video-feed" autoplay></video>
+                </div>
+                <canvas id="photo-canvas" class="canvas-hidden"></canvas>
+                <div class="button-group">
+                    <button id="capture-photo" class="btn btn-primary">📸 Capturar Foto</button>
+                </div>
+                <div id="photo-preview" class="photo-preview hidden">
+                    <p>Foto capturada:</p>
+                    <img id="preview-img" alt="Preview">
+                </div>
+            </section>
+
+            <!-- Seção de Ações -->
+            <section class="form-section">
+                <h2>💾 Salvar Dados:</h2>
+                <div class="button-group">
+                    <button id="save-signed-pdf" class="btn btn-success">📄 Salvar PDF Assinado</button>
+                    <button id="download-signature-image" class="btn btn-secondary">⬇️ Baixar Assinatura</button>
+                    <button id="download-data" class="btn btn-secondary">⬇️ Baixar Imagens</button>
+                </div>
+            </section>
+
+            <!-- Status/Mensagens -->
+            <div id="status-message" class="status-message hidden"></div>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Sistema de Assinatura Digital</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

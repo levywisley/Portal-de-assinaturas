@@ -1,0 +1,677 @@
+/* ============================================================
+   ESTILOS GLOBAIS
+   ============================================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+/* ============================================================
+   CONTAINER E LAYOUT
+   ============================================================ */
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    font-weight: 700;
+}
+
+header .subtitle {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+main {
+    padding: 30px 20px;
+}
+
+footer {
+    background: #f5f5f5;
+    text-align: center;
+    padding: 15px;
+    font-size: 12px;
+    color: #999;
+    border-top: 1px solid #eee;
+}
+
+/* ============================================================
+   SEÇÕES DO FORMULÁRIO
+   ============================================================ */
+
+.form-section {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.form-section:last-of-type {
+    border-bottom: none;
+}
+
+.form-section h2 {
+    font-size: 18px;
+    color: #667eea;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+/* ============================================================
+   UPLOAD DE PDF
+   ============================================================ */
+
+.upload-area {
+    border: 3px dashed #667eea;
+    border-radius: 8px;
+    padding: 40px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f9f9f9;
+}
+
+.upload-area:hover {
+    background: #f0f0f0;
+    border-color: #764ba2;
+}
+
+.upload-area.drag-over {
+    background: #e8eaf6;
+    border-color: #764ba2;
+    box-shadow: 0 0 10px rgba(102, 126, 234, 0.2);
+    transform: scale(1.02);
+}
+
+.upload-area p {
+    margin: 0;
+    color: #667eea;
+    font-weight: 600;
+    font-size: 15px;
+}
+
+.link-upload {
+    text-decoration: underline;
+    cursor: pointer;
+    color: #764ba2;
+}
+
+.document-loaded {
+    text-align: center;
+    color: #48bb78;
+    font-weight: 600;
+}
+
+.document-loaded.hidden {
+    display: none;
+}
+
+.document-loaded p:first-child {
+    font-size: 18px;
+    margin-bottom: 8px;
+}
+
+#document-loading {
+    text-align: center;
+    color: #667eea;
+    font-weight: 600;
+    animation: pulse 1.5s infinite;
+}
+
+.file-info {
+    margin-top: 10px;
+    padding: 12px 15px;
+    background: #e8f5e9;
+    border-left: 4px solid #48bb78;
+    border-radius: 4px;
+    color: #388e3c;
+    font-size: 14px;
+}
+
+.file-info.hidden {
+    display: none;
+}
+
+/* ============================================================
+   VISUALIZADOR PDF
+   ============================================================ */
+
+.pdf-viewer-wrapper {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    overflow: auto;
+    max-height: 650px;
+    background: #f5f5f5;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.pdf-container {
+    position: relative;
+    display: inline-block;
+    margin: 20px;
+}
+
+#pdf-canvas {
+    border: 1px solid #ccc;
+    background: white;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.signature-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: crosshair;
+    background: transparent;
+    border: 2px dashed #667eea;
+    border-radius: 4px;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+    padding: 0 20px 20px 20px;
+}
+
+#page-info {
+    font-weight: 600;
+    color: #667eea;
+    min-width: 120px;
+    text-align: center;
+    background: #f0f0f0;
+    padding: 8px 15px;
+    border-radius: 4px;
+}
+
+/* ============================================================
+   FERRAMENTAS DE ASSINATURA
+   ============================================================ */
+
+.signature-tools {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 6px;
+}
+
+.tool-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.tool-group label {
+    font-weight: 600;
+    color: #333;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.tool-group input[type="range"] {
+    width: 150px;
+    height: 6px;
+    border-radius: 3px;
+    background: linear-gradient(to right, #667eea, #764ba2);
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.tool-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.tool-group input[type="range"]::-webkit-slider-thumb:hover {
+    background: #764ba2;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tool-group input[type="range"]::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #667eea;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: all 0.2s ease;
+}
+
+.tool-group input[type="color"] {
+    width: 50px;
+    height: 40px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.tool-group input[type="color"]:hover {
+    border-color: #667eea;
+    box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+}
+
+#width-value {
+    font-weight: 700;
+    color: #667eea;
+    min-width: 25px;
+    text-align: center;
+    background: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+/* ============================================================
+   CANVAS E VÍDEO
+   ============================================================ */
+
+.canvas-pad {
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    background: white;
+    cursor: crosshair;
+    display: block;
+    margin: 0 auto 15px;
+    max-width: 100%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.video-feed {
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    max-width: 100%;
+    height: auto;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.canvas-hidden {
+    display: none;
+}
+
+.photo-preview {
+    text-align: center;
+    margin-top: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 6px;
+    border: 1px solid #eee;
+}
+
+.photo-preview.hidden {
+    display: none;
+}
+
+.photo-preview p {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.photo-preview img {
+    max-width: 300px;
+    max-height: 300px;
+    border-radius: 6px;
+    margin-top: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* ============================================================
+   BOTÕES
+   ============================================================ */
+
+.button-group {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+}
+
+.btn:active {
+    transform: translateY(1px);
+}
+
+/* Botão Primário */
+.btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(102, 126, 234, 0.4);
+}
+
+.btn-primary:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* Botão Secundário */
+.btn-secondary {
+    background: #f0f0f0;
+    color: #333;
+    border: 2px solid #ddd;
+}
+
+.btn-secondary:hover {
+    background: #e8e8e8;
+    border-color: #667eea;
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary:disabled {
+    background: #f5f5f5;
+    color: #ccc;
+    cursor: not-allowed;
+    border-color: #eee;
+}
+
+/* Botão Sucesso */
+.btn-success {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(72, 187, 120, 0.4);
+}
+
+.btn-success:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+}
+
+/* ============================================================
+   MENSAGENS DE STATUS
+   ============================================================ */
+
+.status-message {
+    padding: 14px 16px;
+    margin-top: 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    animation: slideIn 0.3s ease;
+    border-left: 4px solid;
+}
+
+.status-message.hidden {
+    display: none;
+}
+
+.status-message.info {
+    background: #e3f2fd;
+    color: #1976d2;
+    border-left-color: #1976d2;
+}
+
+.status-message.success {
+    background: #e8f5e9;
+    color: #388e3c;
+    border-left-color: #48bb78;
+}
+
+.status-message.warning {
+    background: #fff3e0;
+    color: #f57c00;
+    border-left-color: #ff9800;
+}
+
+.status-message.error {
+    background: #ffebee;
+    color: #d32f2f;
+    border-left-color: #f44336;
+}
+
+/* ============================================================
+   ANIMAÇÕES
+   ============================================================ */
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+}
+
+/* ============================================================
+   RESPONSIVIDADE
+   ============================================================ */
+
+@media (max-width: 768px) {
+    .container {
+        border-radius: 0;
+    }
+
+    header h1 {
+        font-size: 22px;
+    }
+
+    header .subtitle {
+        font-size: 12px;
+    }
+
+    main {
+        padding: 20px 15px;
+    }
+
+    .form-section h2 {
+        font-size: 16px;
+    }
+
+    .canvas-pad,
+    .video-feed,
+    #pdf-canvas {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .button-group {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .signature-tools {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .tool-group {
+        width: 100%;
+    }
+
+    .tool-group input[type="range"] {
+        width: 100%;
+    }
+
+    .controls {
+        flex-direction: column;
+        padding: 0 10px 20px 10px;
+    }
+
+    #page-info {
+        width: 100%;
+    }
+
+    .pdf-viewer-wrapper {
+        max-height: 500px;
+        margin: 0 -15px;
+        border-radius: 0;
+    }
+
+    .photo-preview img {
+        max-width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    header {
+        padding: 20px 15px;
+    }
+
+    header h1 {
+        font-size: 18px;
+    }
+
+    main {
+        padding: 15px 10px;
+    }
+
+    .form-section {
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+    }
+
+    .button-group {
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        font-size: 12px;
+    }
+
+    .signature-tools {
+        padding: 10px;
+    }
+
+    .tool-group input[type="color"] {
+        width: 40px;
+        height: 35px;
+    }
+}
+
+/* ============================================================
+   SCROLLBAR PERSONALIZADA
+   ============================================================ */
+
+.pdf-viewer-wrapper::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+.pdf-viewer-wrapper::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.pdf-viewer-wrapper::-webkit-scrollbar-thumb {
+    background: #667eea;
+    border-radius: 10px;
+}
+
+.pdf-viewer-wrapper::-webkit-scrollbar-thumb:hover {
+    background: #764ba2;
+}
+
+/* ============================================================
+   ACESSIBILIDADE
+   ============================================================ */
+
+.btn:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+input:focus,
+textarea:focus {
+    outline: 2px solid #667eea;
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
